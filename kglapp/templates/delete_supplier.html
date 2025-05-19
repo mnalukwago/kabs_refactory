@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h2>Confirm Deletion</h2>
+<p>Are you sure you want to delete <strong>{{ supplier.name }}</strong>?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Yes, delete</button>
+    <a href="{% url 'supplier_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

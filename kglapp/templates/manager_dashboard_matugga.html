@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %} Manager Dashboard - Matugga {% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-5">📊 Manager Dashboard - Matugga</h2>
+
+<!-- Dashboard Stats Cards -->
+<div class="row mb-4">
+    <!-- Total Sales Card -->
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Sales</h5>
+                <p class="card-text">{{ total_sales }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Credit Sales Card -->
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Credit Sales</h5>
+                <p class="card-text">{{ total_credit_sales }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Procurements Card -->
+    <div class="col-md-3">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Procurements</h5>
+                <p class="card-text">{{ total_procurements }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total Stock Items Card -->
+    <div class="col-md-3">
+        <div class="card text-white bg-danger mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Stock Items</h5>
+                <p class="card-text">{{ total_stock }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sales Overview Section -->
+<div class="row">
+    <div class="col-md-6">
+        <h4>Sales Overview</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales_overview %}
+                <tr>
+                    <td>{{ sale.produce_name }}</td>
+                    <td>{{ sale.tonnage_kg }} kg</td>
+                    <td>{{ sale.amount_paid }} UGX</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Stock Overview Section -->
+    <div class="col-md-6">
+        <h4>Stock Overview</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity in Stock</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock_item in stock_overview %}
+                <tr>
+                    <td>{{ stock_item.produce_name }}</td>
+                    <td>{{ stock_item.quantity_in_kg }} kg</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

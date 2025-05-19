@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="static 'receipt_detail.css' ">
+<div class="center-wrapper">
+    <div class="receipt-container">
+        <h2>Receipt Details</h2>
+        <p><strong>Receipt No:</strong> {{ receipt.receipt_number }}</p>
+        <p><strong>Date:</strong> {{ receipt.receipt_date }}</p>
+        <p><strong>Buyer:</strong> {{ receipt.sale.buyer_name }}</p>
+        <p><strong>Produce:</strong> {{ receipt.sale.produce_name }}</p>
+        <p><strong>Amount Paid:</strong> {{ receipt.sale.amount_paid }}</p>
+        <p><strong>Issued By:</strong> {{ receipt.issued_by }}</p>
+    </div>
+    <br>
+    <div class="receipt-footer">
+        <p class="">THANK YOU!</p>
+        <p>Contact Us: +256 123 500 000</p>
+        <p>Visit our branches in Maganjo & Matugga.</p>
+    </div>
+
+    </div>
+{% endblock %}

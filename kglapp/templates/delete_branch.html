@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<h2>Delete Branch</h2>
+<p>Are you sure you want to delete "{{ branch.name }}"?</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Confirm Delete</button>
+    <a href="{% url 'branch_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

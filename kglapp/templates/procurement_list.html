@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card border-success shadow">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">📦 Procurement List</h4>
+            <a href="{% url 'create_procurement' %}" class="btn btn-light btn-sm">➕ Add New</a>
+        </div>
+
+        <div class="card-body">
+            {% if procurements %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead class="table-success">
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Produce</th>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Tonnage (kg)</th>
+                            <th>Cost (UGX)</th>
+                            <th>Selling Price (UGX)</th>
+                            <th>Dealer</th>
+                            <th>Contact</th>
+                            <th>Branch</th>
+                            <th>Source</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in procurements %}
+                        <tr>
+                            <td>{{ p.date }}</td>
+                            <td>{{ p.time }}</td>
+                            <td>{{ p.produce_name }}</td>
+                            <td>{{ p.produce_type }}</td>
+                            <td>{{ p.category }}</td>
+                            <td>{{ p.tonnage_kg }}</td>
+                            <td>{{ p.cost_ugx }}</td>
+                            <td>{{ p.selling_price_ugx}}</td>
+                            <td>{{ p.dealer_name }}</td>
+                            <td>{{ p.contact }}</td>
+                            <td>{{ p.branch_name }}</td>
+                            <td>{{ p.source }}</td>
+                            <td>{{ p.description|default:"—" }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <p class="text-muted">No procurement records available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

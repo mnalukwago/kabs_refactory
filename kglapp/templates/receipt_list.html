@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="receipts-wrapper">
+    <div class="receipts-container">
+        <h2>Receipts</h2>
+        <a href="{% url 'create_receipt' %}" class="btn btn-success">New Receipt</a>
+        <ul class="list-group">
+            {% for receipt in receipts %}
+            <li class="list-group-item">
+                <a href="{% url 'receipt_detail' receipt.pk %}">
+                    {{ receipt.receipt_number }} - {{ receipt.sale.buyer_name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+.center-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh; /* Center vertically */
+}
+
+.receipt-container {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 30px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.receipt-container h2 {
+    color: #035e3b;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.receipt-container p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.receipt-container strong {
+    color: #333;
+}

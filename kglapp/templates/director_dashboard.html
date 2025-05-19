@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Director Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">📋 Director Dashboard</h2>
+
+    <!-- Navigation Links -->
+    <div class="mb-4">
+        <a href="#" class="btn btn-outline-danger float-end">Logout</a>
+    </div>
+
+    <!-- Dashboard Stats Cards -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Sales</h5>
+                    <p class="card-text">{{ total_sales }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Credit Sales</h5>
+                    <p class="card-text">{{ total_credit_sales }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Procurements</h5>
+                    <p class="card-text">{{ total_procurements }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Stock Items</h5>
+                    <p class="card-text">{{ total_stock }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
