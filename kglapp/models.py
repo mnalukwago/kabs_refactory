@@ -132,7 +132,7 @@ class Supplier(models.Model):
     contact_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=15)
     email = models.EmailField()
-    address = models.CharField(blank=True, null=True)
+    address = models.CharField(max_length=225,blank=True, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self): 
@@ -187,3 +187,17 @@ class UserprofileManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         return self.create_user(username, email, password, **extra_fields)
 
+# kglapp/models.py
+
+from django.db import models
+
+class Credit(models.Model):
+    produce_name = models.CharField(max_length=100)
+    quantity = models.FloatField()
+    buyer_name = models.CharField(max_length=100)
+    amount_due = models.DecimalField(max_digits=10, decimal_places=2)
+    amount_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.buyer_name} - {self.produce_name}"

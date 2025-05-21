@@ -44,6 +44,12 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from .models import UserProfile
 
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from .models import UserProfile  # Ensure this is your custom profile model
+
 def Login(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -56,7 +62,7 @@ def Login(request):
             if user.groups.filter(name="director").exists():
                 return redirect("director_dashboard")
 
-            elif user.groups.filter(name="manager").exists():
+            elif user.groups.filter(name__startswith="manager_").exists():
                 try:
                     profile = UserProfile.objects.get(user=user)
                     branch = profile.branch.lower()
@@ -68,7 +74,7 @@ def Login(request):
                     messages.error(request, "Manager profile not found.")
                     return redirect("login")
 
-            elif user.groups.filter(name="sales_agent").exists():
+            elif user.groups.filter(name__startswith="sales_agent_").exists():
                 try:
                     profile = UserProfile.objects.get(user=user)
                     branch = profile.branch.lower()
@@ -491,16 +497,6 @@ from django.shortcuts import render, redirect
 # from .forms import CustomSignupForm
 
 
-def signup(request):
-    if request.method == "POST":
-        form = CustomSignupForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("login")  # redirect to your login page
-    else:
-        form = CustomSignupForm()
-    return render(request, "signup.html", {"form": form})
-
 
 # def credit_list(request):
 #     credits = CreditSale.objects.all()
@@ -521,26 +517,27 @@ def maganjo_sales_report(request):
     )
 from django.db.models import Sum
 from django.shortcuts import render
-from .models import Sale, Procurement
+from .models import Sale, Procurement, Credit  # ✅ Credit used consistently
 
+# Branch Comparison Dashboard View
 def branch_comparison_dashboard(request):
     branches = ["Matugga", "Maganjo"]
     branch_data = {}
 
     for branch in branches:
-        # Fetch all data per branch
+        # Fetch data for each branch
         branch_sales = Sale.objects.filter(branch_name=branch)
         branch_procurement = Procurement.objects.filter(branch_name=branch)
-        branch_credit = CreditList.objects.filter(branch_name=branch)
+        branch_credit = Credit.objects.filter(branch_name=branch)  # ✅ Fixed model name
 
-        # Calculate totals for each branch
+        # Aggregate data
         total_sales_kg = branch_sales.aggregate(total=Sum("tonnage_kg"))["total"] or 0
         total_sales_amount = branch_sales.aggregate(total=Sum("amount_paid"))["total"] or 0
         total_procurement_kg = branch_procurement.aggregate(total=Sum("tonnage_kg"))["total"] or 0
         total_credit_kg = branch_credit.aggregate(total=Sum("tonnage_kg"))["total"] or 0
         total_credit_due = branch_credit.aggregate(total=Sum("amount_due"))["total"] or 0
 
-        # Store data
+        # Structure data
         branch_data[branch] = {
             "sales": branch_sales,
             "procurements": branch_procurement,
@@ -553,11 +550,15 @@ def branch_comparison_dashboard(request):
         }
 
     return render(request, "branch_comparison_dashboard.html", {"branch_data": branch_data})
+
+
+# Credit Recovery Report View
 def credit_recovery_report(request):
-    credit_records = CreditList.objects.all().order_by("-due_date")
+    credit_records = Credit.objects.all().order_by("-due_date")  # ✅ Fixed model name
     return render(
         request, "credit_recovery_report.html", {"credit_records": credit_records}
     )
+
 
 
 
@@ -781,12 +782,15 @@ from django.shortcuts import render, redirect
 
 
 
+from django.shortcuts import render, redirect
+from .forms import CustomUserCreationForm
+
 def signup(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("login")
+            return redirect("login")  # Redirect to the login page after successful signup
     else:
         form = CustomUserCreationForm()
     return render(request, "signup.html", {"form": form})

@@ -96,7 +96,7 @@
         <h2>Karibu Groceries</h2>
 
         {% if request.user|has_group:"director" %}
-            <a href="{% url 'director_dashboard' %}"><i class="fas fa-user-cog"></i> Director</a>
+            <a href="{% url 'director_dashboard' %}"><i class="fas fa-user-cog"></i> Director Dashboard</a>
             <a href="{% url 'create_procurement' %}"><i class="fas fa-truck-loading"></i> Procurement</a>
             <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
             <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
@@ -108,30 +108,32 @@
             <a href="{% url 'manager_dashboard_maganjo' %}"><i class="fas fa-user-cog"></i> Manager Maganjo</a>
             <a href="{% url 'sales_agent_dashboard_matugga' %}"><i class="fas fa-user-tag"></i> Salesagent Matugga</a>
             <a href="{% url 'sales_agent_dashboard_maganjo' %}"><i class="fas fa-user-tag"></i> Salesagent Maganjo</a>
-        
-            {% elif request.user|has_group:"manager_matugga" %}
+
+        {% elif request.user|has_group:"manager_matugga" %}
+            <a href="{% url 'manager_dashboard_matugga' %}"><i class="fas fa-user-cog"></i> Manager Dashboard</a>
             <a href="{% url 'create_procurement' %}"><i class="fas fa-truck-loading"></i> Procurement</a>
             <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
             <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
-            
 
-    <!-- Manager-specific content -->
-        <a href="{% url 'manager_dashboard_matugga' %}">Manager Dashboard</a>
+        {% elif request.user|has_group:"manager_maganjo" %}
+            <a href="{% url 'manager_dashboard_maganjo' %}"><i class="fas fa-user-cog"></i> Manager Dashboard</a>
+            <a href="{% url 'create_procurement' %}"><i class="fas fa-truck-loading"></i> Procurement</a>
+            <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
+            <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
+
+        {% elif request.user|has_group:"sales_agent_matugga" %}
+            <a href="{% url 'sales_agent_dashboard_matugga' %}"><i class="fas fa-user-tag"></i> Sales Agent Dashboard</a>
+            <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
+            <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
 
         {% elif request.user|has_group:"sales_agent_maganjo" %}
-        <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
-        <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
-        <a href="{% url 'add_supplier' %}"><i class="fas fa-user-tie"></i> Suppliers</a>
-            
-    <!-- Sales Agent-specific content -->
-        <a href="{% url 'sales_agent_dashboard_maganjo' %}">Sales Agent Dashboard</a>
+            <a href="{% url 'sales_agent_dashboard_maganjo' %}"><i class="fas fa-user-tag"></i> Sales Agent Dashboard</a>
+            <a href="{% url 'create_sale' %}"><i class="fas fa-cash-register"></i> Sales</a>
+            <a href="{% url 'create_credit_sale' %}"><i class="fas fa-credit-card"></i> Credit Sales</a>
+
         {% else %}
-    <!-- Default content or error message -->
-        <p>You don't have permission to view this page.</p>
+            <p class="text-white text-center">You don't have permission to view this page.</p>
         {% endif %}
-
-
-        
 
         <div class="logout-form">
             <form action="{% url 'logout' %}" method="post">
